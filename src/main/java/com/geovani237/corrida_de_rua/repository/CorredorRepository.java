@@ -30,4 +30,8 @@ public class CorredorRepository {
     public Corredor buscarPorId(Integer numeroPeito) {
         return dbCorredor.get(numeroPeito);
     }
+
+    public Corredor retirarKit(Integer corredorId) {
+        return buscarPorId(corredorId);
+    }
 }

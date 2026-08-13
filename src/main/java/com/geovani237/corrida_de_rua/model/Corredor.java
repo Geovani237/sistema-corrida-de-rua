@@ -10,4 +10,5 @@ public class Corredor {
     private Integer idade;
     private String categoria;
     private Corrida corrida;
+    private Boolean statusPagamento;
 }

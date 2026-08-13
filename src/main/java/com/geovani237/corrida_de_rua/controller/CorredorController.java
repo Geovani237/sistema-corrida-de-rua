@@ -27,4 +27,8 @@ public class CorredorController {
     public void atualizarCorrida(Integer numeroPeito, Corrida corrida) {
         corredorService.atualizarCorrida(numeroPeito, corrida);
     }
+
+    public void retirarKit(Integer corredorId) {
+        corredorService.retirarKit(corredorId);
+    }
 }

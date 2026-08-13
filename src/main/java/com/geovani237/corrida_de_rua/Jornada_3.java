@@ -7,7 +7,7 @@ import com.geovani237.corrida_de_rua.model.Corrida;
 
 import java.time.LocalDate;
 
-public class Jornada_2 {
+public class Jornada_3 {
     public static void main(String[] args) {
         CorridaController corridaController = new CorridaController();
         CorredorController corredorController = new CorredorController();
@@ -37,6 +37,8 @@ public class Jornada_2 {
         corredorController.atualizarCorrida(2, corrida);
 
         corredorController.listarTodos().forEach(System.out::println);
+        System.out.println("-----------------");
 
+        corredorController.retirarKit(corredor2.getNumeroPeito());
     }
 }

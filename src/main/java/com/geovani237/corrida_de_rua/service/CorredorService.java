@@ -39,4 +39,13 @@ public class CorredorService {
             throw new NegocioException("Corredor não encontrado");
         }
     }
+
+    public void retirarKit(Integer corredorId) {
+        Corredor corredor = corredorRepository.retirarKit(corredorId);
+        if (corredor != null) {
+            System.out.printf("Kit retirado para o corredor %d", corredorId);
+        } else {
+            throw new RuntimeException("Corredor não encontrado!");
+        }
+    }
 }
