@@ -6,6 +6,7 @@ import com.geovani237.corrida_de_rua.model.Corredor;
 import com.geovani237.corrida_de_rua.model.Corrida;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Jornada_2 {
     public static void main(String[] args) {
@@ -13,7 +14,7 @@ public class Jornada_2 {
         CorredorController corredorController = new CorredorController();
 
         Corrida corrida = new Corrida();
-        corrida.setData(LocalDate.now().plusDays(10));
+        corrida.setData(LocalDateTime.now().plusDays(10));
         corrida.setDistancia(5.0);
         corrida.setLocal("Praça do seu Zé");
 

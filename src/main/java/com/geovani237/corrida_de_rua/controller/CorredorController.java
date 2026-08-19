@@ -4,6 +4,8 @@ import com.geovani237.corrida_de_rua.model.Corredor;
 import com.geovani237.corrida_de_rua.model.Corrida;
 import com.geovani237.corrida_de_rua.service.CorredorService;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 public class CorredorController {
@@ -30,5 +32,9 @@ public class CorredorController {
 
     public void retirarKit(Integer corredorId) {
         corredorService.retirarKit(corredorId);
+    }
+
+    public void registarCorrida(LocalDateTime duracaoCorrida, Corrida corrida) {
+        corredorService.registrarChegada(duracaoCorrida, corrida);
     }
 }

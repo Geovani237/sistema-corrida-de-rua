@@ -34,4 +34,8 @@ public class CorredorRepository {
     public Corredor retirarKit(Integer corredorId) {
         return buscarPorId(corredorId);
     }
+
+//    public void registrarChegada(Integer tempoDeChegada) {
+//        return tempoDeChegada;
+//    }
 }

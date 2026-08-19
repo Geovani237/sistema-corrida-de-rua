@@ -5,6 +5,10 @@ import com.geovani237.corrida_de_rua.model.Corredor;
 import com.geovani237.corrida_de_rua.model.Corrida;
 import com.geovani237.corrida_de_rua.repository.CorredorRepository;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class CorredorService {
@@ -47,5 +51,15 @@ public class CorredorService {
         } else {
             throw new RuntimeException("Corredor não encontrado!");
         }
+    }
+
+    public void registrarChegada(LocalDateTime duracaoCorrida, Corrida corrida) {
+        LocalDateTime inicioCorrida = corrida.getData();
+
+        Duration duracao = Duration.between(inicioCorrida, duracaoCorrida);
+
+        LocalTime tempoCorrida = LocalTime.of(duracao.toHoursPart(), duracao.toMinutesPart());
+
+        System.out.println("Tempo de duração da corrida foi de " + tempoCorrida);
     }
 }
