@@ -2,6 +2,7 @@ package com.geovani237.corrida_de_rua;
 
 import com.geovani237.corrida_de_rua.controller.CorredorController;
 import com.geovani237.corrida_de_rua.controller.CorridaController;
+import com.geovani237.corrida_de_rua.model.Categoria;
 import com.geovani237.corrida_de_rua.model.Corredor;
 import com.geovani237.corrida_de_rua.model.Corrida;
 
@@ -19,7 +20,7 @@ public class Jornada_4 {
         corrida.setLocal("Praça do seu Zé");
 
         Corredor corredor = new Corredor();
-        corredor.setCategoria("Iniciante");
+        corredor.setCategoria(Categoria.AMADOR);
         corredor.setIdade(20);
         corredor.setNome("Rodrigo");
 
@@ -40,7 +41,12 @@ public class Jornada_4 {
         corredorController.listarTodos().forEach(System.out::println);
         System.out.println("-----------------");
 
-        corredorController.registarCorrida(LocalDateTime.now().plusHours(5), corrida);
+        LocalDateTime tempoCorrida = LocalDateTime.of(2026,8,19,22,5,10);
+
+        corredorController.registarCorrida(tempoCorrida, corrida, corredor);
+
+        System.out.println("-----------------");
+        corredorController.listarTodos().forEach(System.out::println);
 
     }
 }

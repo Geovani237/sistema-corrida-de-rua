@@ -34,7 +34,7 @@ public class CorredorController {
         corredorService.retirarKit(corredorId);
     }
 
-    public void registarCorrida(LocalDateTime duracaoCorrida, Corrida corrida) {
-        corredorService.registrarChegada(duracaoCorrida, corrida);
+    public void registarCorrida(LocalDateTime duracaoCorrida, Corrida corrida, Corredor corredor) {
+        corredorService.registrarChegada(duracaoCorrida, corrida, corredor);
     }
 }

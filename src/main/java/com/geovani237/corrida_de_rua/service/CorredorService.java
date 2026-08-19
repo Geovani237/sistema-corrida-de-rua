@@ -20,7 +20,7 @@ public class CorredorService {
     }
 
     public Corredor cadastrar(Corredor corredor) {
-        if (corredor.getIdade() < 5 || corredor.getCategoria().isEmpty()) {
+        if (corredor.getIdade() < 5 || corredor.getCategoria() == null) {
             throw new NegocioException("Dados obrigátórios não informados ou errados, corrija!");
         }
 
@@ -53,13 +53,15 @@ public class CorredorService {
         }
     }
 
-    public void registrarChegada(LocalDateTime duracaoCorrida, Corrida corrida) {
+    public void registrarChegada(LocalDateTime duracaoCorrida, Corrida corrida, Corredor corredor) {
         LocalDateTime inicioCorrida = corrida.getData();
 
         Duration duracao = Duration.between(inicioCorrida, duracaoCorrida);
 
-        LocalTime tempoCorrida = LocalTime.of(duracao.toHoursPart(), duracao.toMinutesPart());
+        LocalTime tempoCorrida = LocalTime.of(duracao.toHoursPart(), duracao.toMinutesPart(), duracao.toSecondsPart());
 
-        System.out.println("Tempo de duração da corrida foi de " + tempoCorrida);
+        corredor.setDuracaoCorrida(tempoCorrida);
+
+        System.out.printf("Tempo de duração do corredor %s foi de %tT%n", corredor.getNome(),tempoCorrida);
     }
 }
