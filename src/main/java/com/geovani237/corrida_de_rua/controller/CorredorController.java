@@ -3,18 +3,18 @@ package com.geovani237.corrida_de_rua.controller;
 import com.geovani237.corrida_de_rua.model.Corredor;
 import com.geovani237.corrida_de_rua.model.Corrida;
 import com.geovani237.corrida_de_rua.service.CorredorService;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+@AllArgsConstructor
+@RestController
 public class CorredorController {
 
-    private CorredorService corredorService;
-
-    public CorredorController() {
-        this.corredorService = new CorredorService();
-    }
+    private final CorredorService corredorService;
 
     public Integer cadastrar(Corredor corredor) {
         corredorService.cadastrar(corredor);

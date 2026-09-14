@@ -1,0 +1,31 @@
+# Server config
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  application:
+    name: corrida-de-rua
+#  Data base config
+  h2:
+    console:
+      enable: true
+  datasource:
+    url: jdbc:h2:mem:corridarua
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+#  Actuator
+springdoc:
+  show-actuator: false
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health, info

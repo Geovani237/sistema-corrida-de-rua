@@ -3,14 +3,15 @@ package com.geovani237.corrida_de_rua.service;
 import com.geovani237.corrida_de_rua.exception.NegocioException;
 import com.geovani237.corrida_de_rua.model.Corredor;
 import com.geovani237.corrida_de_rua.model.Corrida;
-import com.geovani237.corrida_de_rua.repository.CorredorRepository;
+import com.geovani237.corrida_de_rua.repository.old.CorredorRepository;
+import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+@Service
 public class CorredorService {
 
     private CorredorRepository corredorRepository;

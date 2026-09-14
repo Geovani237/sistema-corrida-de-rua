@@ -1,14 +1,15 @@
 package com.geovani237.corrida_de_rua.service;
 
 import com.geovani237.corrida_de_rua.exception.NegocioException;
-import com.geovani237.corrida_de_rua.model.Categoria;
 import com.geovani237.corrida_de_rua.model.Corredor;
 import com.geovani237.corrida_de_rua.model.Corrida;
-import com.geovani237.corrida_de_rua.repository.CorridaRepository;
+import com.geovani237.corrida_de_rua.repository.old.CorridaRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class CorridaService {
 
     private final CorridaRepository corridaRepository;

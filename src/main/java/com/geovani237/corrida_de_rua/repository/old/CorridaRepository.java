@@ -1,4 +1,4 @@
-package com.geovani237.corrida_de_rua.repository;
+package com.geovani237.corrida_de_rua.repository.old;
 
 import com.geovani237.corrida_de_rua.model.Corrida;
 
