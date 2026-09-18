@@ -1,10 +1,8 @@
-package com.geovani237.corrida_de_rua.model;
+package com.geovani237.corrida_de_rua.entity;
 
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Data
 public class Corrida {

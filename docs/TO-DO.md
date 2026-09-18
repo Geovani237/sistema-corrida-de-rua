@@ -1,9 +1,10 @@
 # TO-DO
 
-- [ ] Organizar estrutura de pastas do projeto
-- [ ] Criar DTOs para os dominios
-- [ ] Criar Controllers para as jornadas
-- [ ] Criar Documentação de API com Swagger
+- [x] Organizar estrutura de pastas do projeto
+- [ ] Criar DTOs para os dominios(in progress)
+- [ ] Criar Controllers para as jornadas(in progress)
+- [ ] Criar Documentação de API com Swagger(falta fazer a corrida)
+- [ ] Configurar o Postman para os endpoints
 - [ ] Criar Services para as jornadas
 - [ ] Criar Repositories para os dominios
 - [ ] Criar as Entities para os dominios

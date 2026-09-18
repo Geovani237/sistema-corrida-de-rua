@@ -1,8 +1,8 @@
 package com.geovani237.corrida_de_rua.service;
 
 import com.geovani237.corrida_de_rua.exception.NegocioException;
-import com.geovani237.corrida_de_rua.model.Corredor;
-import com.geovani237.corrida_de_rua.model.Corrida;
+import com.geovani237.corrida_de_rua.entity.CorredorEntity;
+import com.geovani237.corrida_de_rua.entity.Corrida;
 import com.geovani237.corrida_de_rua.repository.old.CorridaRepository;
 import org.springframework.stereotype.Service;
 
@@ -38,19 +38,19 @@ public class CorridaService {
         return corridaRepository.listarCorridas();
     }
 
-    public void resultadoPorCategoria(Corrida corrida, List<Corredor> corredores) {
-        List<Corredor> amador = new ArrayList<>();
-        List<Corredor> elite = new ArrayList<>();
+    public void resultadoPorCategoria(Corrida corrida, List<CorredorEntity> corredores) {
+        List<CorredorEntity> amador = new ArrayList<>();
+        List<CorredorEntity> elite = new ArrayList<>();
 
-        corredores.forEach(corredor -> {
-            if (corredor.getDuracaoCorrida() != null) {
-                switch (corredor.getCategoria()) {
-                    case ELITE -> elite.add(corredor);
-                    case AMADOR -> amador.add(corredor);
-                    default -> System.out.println("Corredor sem categoria!");
-                }
-            }
-        });
+//        corredores.forEach(corredor -> {
+//            if (corredor.getDuracaoCorrida() != null) {
+//                switch (corredor.getCategoria()) {
+//                    case ELITE -> elite.add(corredor);
+//                    case AMADOR -> amador.add(corredor);
+//                    default -> System.out.println("Corredor sem categoria!");
+//                }
+//            }
+//        });
 
         System.out.println("-AMADORES-");
         amador.forEach(System.out::println);

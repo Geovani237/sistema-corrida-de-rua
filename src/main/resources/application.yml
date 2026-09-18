@@ -16,7 +16,7 @@ spring:
     password:
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
 
 #  Actuator
 springdoc:

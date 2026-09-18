@@ -1,6 +1,6 @@
 package com.geovani237.corrida_de_rua.repository.old;
 
-import com.geovani237.corrida_de_rua.model.Corrida;
+import com.geovani237.corrida_de_rua.entity.Corrida;
 
 import java.util.ArrayList;
 import java.util.HashMap;
