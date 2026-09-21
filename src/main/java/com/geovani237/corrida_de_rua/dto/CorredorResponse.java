@@ -1,6 +1,6 @@
 package com.geovani237.corrida_de_rua.dto;
 
-import com.geovani237.corrida_de_rua.enums.Categoria;
+import com.geovani237.corrida_de_rua.enums.CategoriaEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
@@ -14,7 +14,7 @@ public record CorredorResponse (
         @Schema(description = "Idade do corredor em anos", example = "28")
         Integer idade,
         @Schema(description = "Categoria do corredor", example = "AMADOR")
-        Categoria categoria,
+        CategoriaEnum categoriaEnum,
         @Schema(description = "Identificadores das corridas do corredor", example = "[1]")
         List<Long> corridaIds
 ){

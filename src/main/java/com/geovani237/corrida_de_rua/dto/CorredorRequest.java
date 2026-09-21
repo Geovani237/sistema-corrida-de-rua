@@ -1,13 +1,11 @@
 package com.geovani237.corrida_de_rua.dto;
 
-import com.geovani237.corrida_de_rua.enums.Categoria;
+import com.geovani237.corrida_de_rua.enums.CategoriaEnum;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
-
-import java.time.LocalTime;
 
 
 public record CorredorRequest (
@@ -23,7 +21,7 @@ public record CorredorRequest (
 
         @Schema(description = "Categoria do corredor", example = "AMADOR", requiredMode = Schema.RequiredMode.REQUIRED)
         @NotNull(message = "Categoria obrigatória")
-        Categoria categoria,
+        CategoriaEnum categoriaEnum,
 
         @Schema(description = "Identificador da corrida à qual o corredor será vinculado", example = "1", minimum = "1", requiredMode = Schema.RequiredMode.REQUIRED)
         @NotNull(message = "Id da corrida é obrigatório")

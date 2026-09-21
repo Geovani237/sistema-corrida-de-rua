@@ -1,23 +1,39 @@
 package com.geovani237.corrida_de_rua.entity;
 
+import com.geovani237.corrida_de_rua.enums.CategoriaEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_corredores")
 @Data
-public class CorredorEntity implements Serializable {
+public class CorredorEntity extends AuditDataEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(nullable = false, length = 100)
     private String nome;
+
+    @Column(nullable = false)
     private Integer idade;
-//    private Categoria categoria;
-//    private Corrida corrida;
-    private Boolean statusPagamento;
-    private LocalTime duracaoCorrida;
+
+    @Column(name = "status_pagamento", nullable = false)
+    private boolean statusPagamento;
+
+    @Column(name = "duracao_corrida")
+    private Double duracaoCorrida;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "categoria", nullable = false)
+    private CategoriaEnum categoriaEnum;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "tb_corredores_corridas",
+        joinColumns = @JoinColumn(name = "corredor_id"),
+        inverseJoinColumns = @JoinColumn(name = "corrida_id")
+    )
+    private List<CorridaEntity> corridas;
+
 }
