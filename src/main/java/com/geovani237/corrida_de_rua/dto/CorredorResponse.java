@@ -1,11 +1,8 @@
 package com.geovani237.corrida_de_rua.dto;
 
-import com.geovani237.corrida_de_rua.entity.Corrida;
 import com.geovani237.corrida_de_rua.enums.Categoria;
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Data;
 
-import java.time.LocalTime;
 import java.util.List;
 
 public record CorredorResponse (

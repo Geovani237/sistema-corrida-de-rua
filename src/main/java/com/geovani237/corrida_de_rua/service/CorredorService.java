@@ -1,8 +1,7 @@
 package com.geovani237.corrida_de_rua.service;
 
-import com.geovani237.corrida_de_rua.exception.NegocioException;
+import com.geovani237.corrida_de_rua.entity.CorridaEntity;
 import com.geovani237.corrida_de_rua.entity.CorredorEntity;
-import com.geovani237.corrida_de_rua.entity.Corrida;
 import com.geovani237.corrida_de_rua.repository.old.CorredorRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +35,7 @@ public class CorredorService {
         return corredorRepository.listarTodos();
     }
 
-    public void atualizarCorrida(Integer numeroPeito, Corrida corrida) {
+    public void atualizarCorrida(Integer numeroPeito, CorridaEntity corridaEntity) {
         CorredorEntity corredorEntity = corredorRepository.buscarPorId(numeroPeito);
 //        if (corredorEntity != null) {
 //            corredorEntity.setCorrida(corrida);
@@ -54,8 +53,8 @@ public class CorredorService {
         }
     }
 
-    public void registrarChegada(LocalDateTime duracaoCorrida, Corrida corrida, CorredorEntity corredorEntity) {
-        LocalDateTime inicioCorrida = corrida.getData();
+    public void registrarChegada(LocalDateTime duracaoCorrida, CorridaEntity corridaEntity, CorredorEntity corredorEntity) {
+        LocalDateTime inicioCorrida = corridaEntity.getData();
 
         Duration duracao = Duration.between(inicioCorrida, duracaoCorrida);
 

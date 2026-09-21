@@ -17,7 +17,7 @@ sistema para organizar provas, inscrições, kits, tempos de chegada e classific
 
 ## Jornada 1: Cadastro de Prova
 ```
-Organizador cadastrou corrida
+Organizador cadastrou corridaEntity
 ↓
 Organizador informou distância, data e local
 ↓

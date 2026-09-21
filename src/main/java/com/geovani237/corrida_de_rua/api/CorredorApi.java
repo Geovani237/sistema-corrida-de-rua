@@ -21,7 +21,7 @@ public interface CorredorApi {
 
     @Operation(
             summary = "Cadastrar um novo corredor",
-            description = "Cadastra um corredor vinculado a uma corrida. A idade mínima permitida é 12 anos."
+            description = "Cadastra um corredor vinculado a uma corridaEntity. A idade mínima permitida é 12 anos."
     )
     @ApiResponses(value = {
             @ApiResponse(

@@ -3,7 +3,7 @@
 - [x] Organizar estrutura de pastas do projeto
 - [ ] Criar DTOs para os dominios(in progress)
 - [ ] Criar Controllers para as jornadas(in progress)
-- [ ] Criar Documentação de API com Swagger(falta fazer a corrida)
+- [ ] Criar Documentação de API com Swagger(falta fazer a corridaEntity)
 - [ ] Configurar o Postman para os endpoints
 - [ ] Criar Services para as jornadas
 - [ ] Criar Repositories para os dominios

@@ -4,7 +4,7 @@ import com.geovani237.corrida_de_rua.api.CorredorApi;
 import com.geovani237.corrida_de_rua.dto.CorredorRequest;
 import com.geovani237.corrida_de_rua.dto.CorredorResponse;
 import com.geovani237.corrida_de_rua.entity.CorredorEntity;
-import com.geovani237.corrida_de_rua.entity.Corrida;
+import com.geovani237.corrida_de_rua.entity.CorridaEntity;
 import com.geovani237.corrida_de_rua.service.CorredorService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -39,15 +39,15 @@ public class CorredorController implements CorredorApi {
     }
 
 
-    public void atualizarCorrida(Integer numeroPeito, Corrida corrida) {
-        corredorService.atualizarCorrida(numeroPeito, corrida);
+    public void atualizarCorrida(Integer numeroPeito, CorridaEntity corridaEntity) {
+        corredorService.atualizarCorrida(numeroPeito, corridaEntity);
     }
 
     public void retirarKit(Integer corredorId) {
         corredorService.retirarKit(corredorId);
     }
 
-    public void registarCorrida(LocalDateTime duracaoCorrida, Corrida corrida, CorredorEntity corredorEntity) {
-        corredorService.registrarChegada(duracaoCorrida, corrida, corredorEntity);
+    public void registarCorrida(LocalDateTime duracaoCorrida, CorridaEntity corridaEntity, CorredorEntity corredorEntity) {
+        corredorService.registrarChegada(duracaoCorrida, corridaEntity, corredorEntity);
     }
 }

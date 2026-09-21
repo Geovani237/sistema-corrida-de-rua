@@ -1,6 +1,6 @@
 package com.geovani237.corrida_de_rua.repository.old;
 
-import com.geovani237.corrida_de_rua.entity.Corrida;
+import com.geovani237.corrida_de_rua.entity.CorridaEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,17 +9,17 @@ import java.util.Map;
 
 public class CorridaRepository {
 
-    private static final Map<Integer, Corrida> dbCorrida = new HashMap<>();
+    private static final Map<Integer, CorridaEntity> dbCorrida = new HashMap<>();
     private Integer idCorrida = 1;
 
-    public Corrida cadastrar(Corrida corrida) {
-        corrida.setId(idCorrida++);
-        dbCorrida.put(corrida.getId(), corrida);
+    public CorridaEntity cadastrar(CorridaEntity corridaEntity) {
+        corridaEntity.setId(idCorrida++);
+        dbCorrida.put(corridaEntity.getId(), corridaEntity);
 
-        return corrida;
+        return corridaEntity;
     }
 
-    public List<Corrida> listarCorridas(){
+    public List<CorridaEntity> listarCorridas(){
         return new ArrayList<>(dbCorrida.values());
     }
 }

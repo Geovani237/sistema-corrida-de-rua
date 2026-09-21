@@ -1,8 +1,8 @@
 package com.geovani237.corrida_de_rua.service;
 
+import com.geovani237.corrida_de_rua.entity.CorridaEntity;
 import com.geovani237.corrida_de_rua.exception.NegocioException;
 import com.geovani237.corrida_de_rua.entity.CorredorEntity;
-import com.geovani237.corrida_de_rua.entity.Corrida;
 import com.geovani237.corrida_de_rua.repository.old.CorridaRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,15 +18,15 @@ public class CorridaService {
         this.corridaRepository = new CorridaRepository();
     }
 
-    public Corrida cadastrar(Corrida corrida) {
-        if (corrida.getData() == null || corrida.getLocal() == null || corrida.getDistancia() == null) {
+    public CorridaEntity cadastrar(CorridaEntity corridaEntity) {
+        if (corridaEntity.getData() == null || corridaEntity.getLocal() == null || corridaEntity.getDistancia() == null) {
             throw new NegocioException("Não foi possível cadastrar a corrida, há algum campo não preenchido");
         }
 
         try {
             System.out.println("Inscrições foram abertas!");
 
-            return corridaRepository.cadastrar(corrida);
+            return corridaRepository.cadastrar(corridaEntity);
         } catch (Exception e) {
             throw new RuntimeException("Erro ao cadastra Corrida", e);
         }
@@ -34,11 +34,11 @@ public class CorridaService {
 
     }
 
-    public List<Corrida> listarCorridas() {
+    public List<CorridaEntity> listarCorridas() {
         return corridaRepository.listarCorridas();
     }
 
-    public void resultadoPorCategoria(Corrida corrida, List<CorredorEntity> corredores) {
+    public void resultadoPorCategoria(CorridaEntity corridaEntity, List<CorredorEntity> corredores) {
         List<CorredorEntity> amador = new ArrayList<>();
         List<CorredorEntity> elite = new ArrayList<>();
 

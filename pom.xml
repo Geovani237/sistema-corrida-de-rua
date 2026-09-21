@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.geovani237</groupId>
-	<artifactId>corrida-de-rua</artifactId>
+	<artifactId>corridaEntity-de-rua</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
 

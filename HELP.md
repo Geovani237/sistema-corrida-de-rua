@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.geovani237.corrida-de-rua' is invalid and this project uses 'com.geovani237.corrida_de_rua' instead.
+* The original package name 'com.geovani237.corridaEntity-de-rua' is invalid and this project uses 'com.geovani237.corrida_de_rua' instead.
 
 # Getting Started
 
