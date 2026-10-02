@@ -101,6 +101,7 @@
 								<path>
 									<groupId>org.mapstruct</groupId>
 									<artifactId>mapstruct-processor</artifactId>
+									<version>1.5.2.Final</version>
 								</path>
 							</annotationProcessorPaths>
 						</configuration>
@@ -120,6 +121,7 @@
 								<path>
 									<groupId>org.mapstruct</groupId>
 									<artifactId>mapstruct-processor</artifactId>
+									<version>1.5.2.Final</version>
 								</path>
 							</annotationProcessorPaths>
 						</configuration>

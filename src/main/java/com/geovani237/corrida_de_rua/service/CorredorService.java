@@ -1,8 +1,15 @@
 package com.geovani237.corrida_de_rua.service;
 
+import com.geovani237.corrida_de_rua.dto.CorredorRequest;
+import com.geovani237.corrida_de_rua.dto.CorredorResponse;
 import com.geovani237.corrida_de_rua.entity.CorredorEntity;
 import com.geovani237.corrida_de_rua.entity.CorridaEntity;
+import com.geovani237.corrida_de_rua.exception.CorredorNaoEncontradoException;
+import com.geovani237.corrida_de_rua.exception.CorridaNaoEncontradoException;
+import com.geovani237.corrida_de_rua.exception.ErroSistemicoException;
+import com.geovani237.corrida_de_rua.mapper.CorredorMapper;
 import com.geovani237.corrida_de_rua.repository.CorredorRepository;
+import com.geovani237.corrida_de_rua.repository.CorridaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,43 +17,53 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class CorredorService {
 
-    private CorredorRepository corredorRepository;
+    private final CorredorRepository corredorRepository;
 
-//    public CorredorService() {
-//        this.corredorRepository = new CorredorRepository();
-//    }
+    private final CorridaRepository corridaRepository;
 
-    public CorredorEntity cadastrar(CorredorEntity corredorEntity) {
-//        if (corredorEntity.getIdade() < 5 || corredorEntity.getCategoria() == null) {
-//            throw new DadosInvalidosException("Dados obrigátórios não informados ou errados, corrija!");
-//        }
+    private final CorredorMapper corredorMapper;
+
+
+    public CorredorResponse cadastrar(CorredorRequest corredorRequest) {
 
         try {
-            return corredorRepository.save(corredorEntity);
+            CorredorEntity corredorEntity = corredorMapper.toEntity(corredorRequest);
+            corredorRepository.save(corredorEntity);
+            return corredorMapper.toResponse(corredorEntity);
         } catch (Exception e) {
-            throw new  RuntimeException("Erro ao cadastra corredor", e);
+            throw new ErroSistemicoException("Erro ao cadastra corredor");
         }
     }
 
-    public List<CorredorEntity> listarTodos() {
-        return corredorRepository.findAll();
+    public List<CorredorResponse> listarTodos() {
+        return corredorRepository.findAll().stream()
+                .map(corredorMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
-    public void atualizarCorrida(Integer numeroPeito, CorridaEntity corridaEntity) {
-//        CorredorEntity corredorEntity = corredorRepository.buscarPorId(numeroPeito);
-//        if (corredorEntity != null) {
-//            corredorEntity.setCorrida(corrida);
-//        } else {
-//            throw new CorredorNaoEncontradoException("Corredor não encontrado");
-//        }
+    public CorredorResponse atualizarCorrida(Long numeroPeito, Long corridaId) {
+        CorredorEntity corredorEntity = corredorRepository.findById(numeroPeito).orElseThrow(
+                () -> new CorredorNaoEncontradoException("Corredor não encontrado"));
+
+        if (corredorEntity.getCorridas().stream().anyMatch(corrida -> corrida.getId().equals(corridaId))) {
+            throw new ErroSistemicoException("Corrida já cadastrada para o corredor");
+        } else  {
+            CorridaEntity corridaEntity = corridaRepository.findById(corridaId).orElseThrow(
+                    () -> new CorridaNaoEncontradoException("Corrida não encontrada"));
+            corredorEntity.getCorridas().add(corridaEntity);
+            corredorRepository.save(corredorEntity);
+
+            return corredorMapper.toResponse(corredorEntity);
+        }
     }
 
-    public void retirarKit(Integer corredorId) {
+    public void retirarKit(Long corredorId) {
 //        CorredorEntity corredorEntity = corredorRepository.retirarKit(corredorId);
 //        if (corredorEntity != null) {
 //            System.out.printf("Kit retirado para o corredor %d", corredorId);

@@ -1,8 +1,12 @@
 package com.geovani237.corrida_de_rua.service;
 
+import com.geovani237.corrida_de_rua.dto.CorridaRequest;
+import com.geovani237.corrida_de_rua.dto.CorridaResponse;
 import com.geovani237.corrida_de_rua.entity.CorredorEntity;
 import com.geovani237.corrida_de_rua.entity.CorridaEntity;
 import com.geovani237.corrida_de_rua.exception.DadosInvalidosException;
+import com.geovani237.corrida_de_rua.exception.ErroSistemicoException;
+import com.geovani237.corrida_de_rua.mapper.CorridaMapper;
 import com.geovani237.corrida_de_rua.repository.CorridaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,29 +20,28 @@ public class CorridaService {
 
     private final CorridaRepository corridaRepository;
 
-//    public CorridaService() {
-//        this.corridaRepository = new CorridaRepository();
-//    }
+    private final CorridaMapper corridaMapper;
 
-    public CorridaEntity cadastrar(CorridaEntity corridaEntity) {
-        if (corridaEntity.getData() == null || corridaEntity.getLocal() == null || corridaEntity.getDistancia() == null) {
-            throw new DadosInvalidosException("Não foi possível cadastrar a corrida, há algum campo não preenchido");
-        }
+
+    public CorridaResponse cadastrar(CorridaRequest corridaRequest) {
 
         try {
-            System.out.println("Inscrições foram abertas!");
+            CorridaEntity corridaEntity = corridaMapper.toEntity(corridaRequest);
 
-            return corridaRepository.save(corridaEntity);
+            corridaRepository.save(corridaEntity);
+
+            return corridaMapper.toResponse(corridaEntity);
+
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao cadastra Corrida", e);
+            throw new ErroSistemicoException("Erro ao cadastra Corrida");
         }
-
 
     }
 
-    public List<CorridaEntity> listarCorridas() {
-//        return corridaRepository.listarCorridas();
-        return null;
+    public List<CorridaResponse> listarCorridas() {
+        return corridaRepository.findAll().stream()
+                .map(corridaMapper::toResponse)
+                .collect(java.util.stream.Collectors.toList());
     }
 
     public void resultadoPorCategoria(CorridaEntity corridaEntity, List<CorredorEntity> corredores) {

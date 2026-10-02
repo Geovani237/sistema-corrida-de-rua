@@ -39,15 +39,15 @@ public class CorredorController implements CorredorApi {
     }
 
 
-    public void atualizarCorrida(Integer numeroPeito, CorridaEntity corridaEntity) {
-        corredorService.atualizarCorrida(numeroPeito, corridaEntity);
-    }
+//    public void atualizarCorrida(Integer numeroPeito, CorridaEntity corridaEntity) {
+//        corredorService.atualizarCorrida(numeroPeito, corridaEntity);
+//    }
 
-    public void retirarKit(Integer corredorId) {
-        corredorService.retirarKit(corredorId);
-    }
-
-    public void registarCorrida(LocalDateTime duracaoCorrida, CorridaEntity corridaEntity, CorredorEntity corredorEntity) {
-        corredorService.registrarChegada(duracaoCorrida, corridaEntity, corredorEntity);
-    }
+//    public void retirarKit(Integer corredorId) {
+//        corredorService.retirarKit(corredorId);
+//    }
+//
+//    public void registarCorrida(LocalDateTime duracaoCorrida, CorridaEntity corridaEntity, CorredorEntity corredorEntity) {
+//        corredorService.registrarChegada(duracaoCorrida, corridaEntity, corredorEntity);
+//    }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 @Tag(name = "Corrida", description = "endpoint para gerenciar dados da corrida")
 public interface CorridaApi {
 
-    ResponseEntity<Long> cadastrar(CorridaRequest corridaRequest);
+    ResponseEntity<CorridaResponse> cadastrar(CorridaRequest corridaRequest);
 
     ResponseEntity<List<CorridaResponse>> listarCorridas();
 }

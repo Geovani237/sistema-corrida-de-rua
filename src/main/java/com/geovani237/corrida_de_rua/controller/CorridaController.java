@@ -6,7 +6,9 @@ import com.geovani237.corrida_de_rua.dto.CorridaResponse;
 import com.geovani237.corrida_de_rua.entity.CorredorEntity;
 import com.geovani237.corrida_de_rua.entity.CorridaEntity;
 import com.geovani237.corrida_de_rua.service.CorridaService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,18 +23,18 @@ public class CorridaController implements CorridaApi {
 
     @Override
     @PostMapping
-    public ResponseEntity<Long> cadastrar(CorridaRequest corridaRequest) {
-//        corridaService.cadastrar(corridaEntity);
+    public ResponseEntity<CorridaResponse> cadastrar(@RequestBody @Valid CorridaRequest corridaRequest) {
+        CorridaResponse corridaResponse = corridaService.cadastrar(corridaRequest);
 
-//        return corridaEntity.getId();
-        return null;
+        return ResponseEntity.status(HttpStatus.CREATED).body(corridaResponse);
     }
 
     @Override
     @GetMapping
     public ResponseEntity<List<CorridaResponse>> listarCorridas() {
-//        return corridaService.listarCorridas();
-        return null;
+        return corridaService.listarCorridas().isEmpty() ?
+                ResponseEntity.noContent().build() :
+                ResponseEntity.ok(corridaService.listarCorridas());
     }
 
     @GetMapping("/resultado")
