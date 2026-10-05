@@ -84,7 +84,7 @@ public interface CorredorApi {
                     )
             )
     })
-    ResponseEntity<Long> cadastrar(
+    ResponseEntity<CorredorResponse> cadastrar(
             @RequestBody(
                     required = true,
                     description = "Dados necessários para o cadastro do corredor",
@@ -137,4 +137,6 @@ public interface CorredorApi {
             )
     })
     ResponseEntity<List<CorredorResponse>> listarTodos();
+
+    ResponseEntity<CorredorResponse> atualizarCorrida(Long numeroPeito, Long corridaId);
 }

@@ -14,7 +14,7 @@ public record CorredorResponse (
         @Schema(description = "Idade do corredor em anos", example = "28")
         Integer idade,
         @Schema(description = "Categoria do corredor", example = "AMADOR")
-        CategoriaEnum categoriaEnum,
+        CategoriaEnum categoria,
         @Schema(description = "Identificadores das corridas do corredor", example = "[1]")
         List<Long> corridaIds
 ){

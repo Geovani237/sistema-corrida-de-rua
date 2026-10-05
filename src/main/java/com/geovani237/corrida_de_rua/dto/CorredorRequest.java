@@ -21,7 +21,7 @@ public record CorredorRequest (
 
         @Schema(description = "Categoria do corredor", example = "AMADOR", requiredMode = Schema.RequiredMode.REQUIRED)
         @NotNull(message = "Categoria obrigatória")
-        CategoriaEnum categoriaEnum,
+        CategoriaEnum categoria,
 
         @Schema(description = "Identificador da corrida à qual o corredor será vinculado", example = "1", minimum = "1", requiredMode = Schema.RequiredMode.REQUIRED)
         @NotNull(message = "Id da corrida é obrigatório")

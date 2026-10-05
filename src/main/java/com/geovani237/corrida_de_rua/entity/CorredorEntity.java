@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,7 +27,7 @@ public class CorredorEntity extends AuditDataEntity implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "categoria", nullable = false)
-    private CategoriaEnum categoriaEnum;
+    private CategoriaEnum categoria;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -34,6 +35,6 @@ public class CorredorEntity extends AuditDataEntity implements Serializable {
         joinColumns = @JoinColumn(name = "corredor_id"),
         inverseJoinColumns = @JoinColumn(name = "corrida_id")
     )
-    private List<CorridaEntity> corridas;
+    private List<CorridaEntity> corridas = new ArrayList<>();
 
 }

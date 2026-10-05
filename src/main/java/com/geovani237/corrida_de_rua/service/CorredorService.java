@@ -34,6 +34,10 @@ public class CorredorService {
 
         try {
             CorredorEntity corredorEntity = corredorMapper.toEntity(corredorRequest);
+
+            corredorEntity.getCorridas().add(corridaRepository.findById(corredorRequest.corridaId()).orElseThrow(
+                    () -> new CorridaNaoEncontradoException("Corrida não encontrada")));
+
             corredorRepository.save(corredorEntity);
             return corredorMapper.toResponse(corredorEntity);
         } catch (Exception e) {

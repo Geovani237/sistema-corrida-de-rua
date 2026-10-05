@@ -8,8 +8,9 @@
 - [ ] Criar Services para as jornadas
 - [x] Criar Repositories para os dominios
 - [x] Criar as Entities para os dominios
-- [x] Criar os Mappers
+- [ ] Criar os Mappers(in progress)
 - [ ] Criar Exceptions para os fluxos de negócio
+- [ ] Enriquecer a API com anotações usando IA
 - [ ] Criar camada de log estruturado
 - [ ] Configurar profile do projeto para desenvolvimento e produção
 - [ ] internacionalização das mensagens 
