@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -139,4 +140,8 @@ public interface CorredorApi {
     ResponseEntity<List<CorredorResponse>> listarTodos();
 
     ResponseEntity<CorredorResponse> atualizarCorrida(Long numeroPeito, Long corridaId);
+
+    ResponseEntity<Void> retirarKit(Long corredorId);
+
+     ResponseEntity<Void> registarCorrida(Long corridaId, Long corredorId);
 }

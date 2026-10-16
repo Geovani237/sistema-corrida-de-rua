@@ -2,6 +2,7 @@ package com.geovani237.corrida_de_rua.service;
 
 import com.geovani237.corrida_de_rua.dto.CorredorRequest;
 import com.geovani237.corrida_de_rua.dto.CorredorResponse;
+import com.geovani237.corrida_de_rua.dto.CorridaRequest;
 import com.geovani237.corrida_de_rua.entity.CorredorEntity;
 import com.geovani237.corrida_de_rua.entity.CorridaEntity;
 import com.geovani237.corrida_de_rua.exception.CorredorNaoEncontradoException;
@@ -10,7 +11,9 @@ import com.geovani237.corrida_de_rua.exception.ErroSistemicoException;
 import com.geovani237.corrida_de_rua.mapper.CorredorMapper;
 import com.geovani237.corrida_de_rua.repository.CorredorRepository;
 import com.geovani237.corrida_de_rua.repository.CorridaRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -21,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class CorredorService {
 
     private final CorredorRepository corredorRepository;
@@ -29,18 +33,20 @@ public class CorredorService {
 
     private final CorredorMapper corredorMapper;
 
-
+    @Transactional
     public CorredorResponse cadastrar(CorredorRequest corredorRequest) {
 
-        try {
             CorredorEntity corredorEntity = corredorMapper.toEntity(corredorRequest);
 
             corredorEntity.getCorridas().add(corridaRepository.findById(corredorRequest.corridaId()).orElseThrow(
                     () -> new CorridaNaoEncontradoException("Corrida não encontrada")));
 
+        try {
             corredorRepository.save(corredorEntity);
             return corredorMapper.toResponse(corredorEntity);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
+            log.error("Erro ao cadastrar corredor", e);
             throw new ErroSistemicoException("Erro ao cadastra corredor");
         }
     }
@@ -51,6 +57,7 @@ public class CorredorService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public CorredorResponse atualizarCorrida(Long numeroPeito, Long corridaId) {
         CorredorEntity corredorEntity = corredorRepository.findById(numeroPeito).orElseThrow(
                 () -> new CorredorNaoEncontradoException("Corredor não encontrado"));
@@ -67,24 +74,33 @@ public class CorredorService {
         }
     }
 
+    @Transactional
     public void retirarKit(Long corredorId) {
-//        CorredorEntity corredorEntity = corredorRepository.retirarKit(corredorId);
-//        if (corredorEntity != null) {
-//            System.out.printf("Kit retirado para o corredor %d", corredorId);
-//        } else {
-//            throw new CorredorNaoEncontradoException("Corredor não encontrado!");
-//        }
+        CorredorEntity corredorEntity = corredorRepository.findById(corredorId).orElseThrow(
+                () -> new CorredorNaoEncontradoException("Corredor não encontrado"));
+
+        corredorEntity.setStatusPagamento(true);
+        // ideal ter um try catch
+        corredorRepository.save(corredorEntity);
+
     }
 
-    public void registrarChegada(LocalDateTime duracaoCorrida, CorridaEntity corridaEntity, CorredorEntity corredorEntity) {
+    @Transactional
+    public void registrarChegada(Long corridaId, Long corredorId) {
+
+        CorredorEntity corredorEntity = corredorRepository.findById(corredorId).orElseThrow(
+                () -> new CorredorNaoEncontradoException("Corredor não encontrado"));
+
+        CorridaEntity corridaEntity = corredorEntity.getCorridas().stream()
+                .filter(corrida -> corrida.getId().equals(corridaId))
+                .findFirst()
+                .orElseThrow(() -> new CorridaNaoEncontradoException("Corrida não encontrada"));
+
         LocalDateTime inicioCorrida = corridaEntity.getData();
+        LocalDateTime chegadaCorrida = LocalDateTime.now();
+        Duration duracao = Duration.between(inicioCorrida, chegadaCorrida);
+        corredorEntity.setDuracaoCorrida((double) duracao.toSeconds());
+        corredorRepository.save(corredorEntity);
 
-        Duration duracao = Duration.between(inicioCorrida, duracaoCorrida);
-
-        LocalTime tempoCorrida = LocalTime.of(duracao.toHoursPart(), duracao.toMinutesPart(), duracao.toSecondsPart());
-
-//        corredorEntity.setDuracaoCorrida(tempoCorrida);
-
-        System.out.printf("Tempo de duração do corredor %s foi de %tT%n", corredorEntity.getNome(),tempoCorrida);
     }
 }

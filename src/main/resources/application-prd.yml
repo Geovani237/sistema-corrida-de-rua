@@ -1,0 +1,16 @@
+# Server config
+server:
+  port: ${SERVER_PORT:8092}
+
+spring:
+
+#  Data base config
+  h2:
+    console:
+      enable: true
+  datasource:
+    url: jdbc:h2:mem:corridaruaprd
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+

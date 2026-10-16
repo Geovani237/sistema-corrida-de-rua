@@ -3,6 +3,7 @@ package com.geovani237.corrida_de_rua.controller;
 import com.geovani237.corrida_de_rua.api.CorredorApi;
 import com.geovani237.corrida_de_rua.dto.CorredorRequest;
 import com.geovani237.corrida_de_rua.dto.CorredorResponse;
+import com.geovani237.corrida_de_rua.dto.CorridaRequest;
 import com.geovani237.corrida_de_rua.dto.CorridaResponse;
 import com.geovani237.corrida_de_rua.entity.CorredorEntity;
 import com.geovani237.corrida_de_rua.entity.CorridaEntity;
@@ -47,11 +48,20 @@ public class CorredorController implements CorredorApi {
         return ResponseEntity.ok(corredor);
     }
 
-//    public void retirarKit(Integer corredorId) {
-//        corredorService.retirarKit(corredorId);
-//    }
-//
-//    public void registarCorrida(LocalDateTime duracaoCorrida, CorridaEntity corridaEntity, CorredorEntity corredorEntity) {
-//        corredorService.registrarChegada(duracaoCorrida, corridaEntity, corredorEntity);
-//    }
+    @Override
+    @PutMapping("/{corredorId}/kits")
+    public ResponseEntity<Void> retirarKit(@PathVariable Long corredorId) {
+        corredorService.retirarKit(corredorId);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    @PutMapping("/{corredorId}/corridas/{corridaId}/chegada")
+    public ResponseEntity<Void> registarCorrida(@PathVariable Long corridaId, @PathVariable Long corredorId) {
+        corredorService.registrarChegada(corridaId, corredorId);
+
+        return ResponseEntity.ok().build();
+    }
+
 }

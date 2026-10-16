@@ -7,6 +7,8 @@ import com.geovani237.corrida_de_rua.entity.CorridaEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface CorredorMapper {
 
@@ -37,6 +39,16 @@ public interface CorredorMapper {
     CorredorEntity toEntity(CorredorRequest request);
 
     @Mapping(target = "numeroPeito", source = "id")
+    @Mapping(target = "corridaIds", expression = "java(mapCorridasToIds(entity.getCorridas()))")
     CorredorResponse toResponse(CorredorEntity entity);
+
+    default List<Long> mapCorridasToIds(List<CorridaEntity> corridas) {
+        if (corridas == null) {
+            return null;
+        }
+        return corridas.stream()
+                .map(CorridaEntity::getId)
+                .toList();
+    }
 
 }

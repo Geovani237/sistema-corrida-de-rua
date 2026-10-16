@@ -20,7 +20,7 @@ public class CorredorEntity extends AuditDataEntity implements Serializable {
     private Integer idade;
 
     @Column(name = "status_pagamento", nullable = false)
-    private boolean statusPagamento;
+    private boolean statusPagamento = false;
 
     @Column(name = "duracao_corrida")
     private Double duracaoCorrida;
