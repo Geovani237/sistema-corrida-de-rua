@@ -44,6 +44,7 @@ public class CorridaService {
                 .collect(java.util.stream.Collectors.toList());
     }
 
+    //FIXME: Corrigir método resultadoPorCategoria
     public void resultadoPorCategoria(CorridaEntity corridaEntity, List<CorredorEntity> corredores) {
         List<CorredorEntity> amador = new ArrayList<>();
         List<CorredorEntity> elite = new ArrayList<>();

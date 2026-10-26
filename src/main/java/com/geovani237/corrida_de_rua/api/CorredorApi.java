@@ -4,6 +4,7 @@ import com.geovani237.corrida_de_rua.dto.CorredorRequest;
 import com.geovani237.corrida_de_rua.dto.CorredorResponse;
 import com.geovani237.corrida_de_rua.dto.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -17,12 +18,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@Tag(name = "Corredor", description = "endpoint para gerenciar dados do corredor")
+@Tag(name = "Corredor", description = "Endpoints para cadastrar e gerenciar corredores")
 public interface CorredorApi {
 
     @Operation(
             summary = "Cadastrar um novo corredor",
-            description = "Cadastra um corredor vinculado a uma corridaEntity. A idade mínima permitida é 12 anos."
+            description = "Cadastra um corredor vinculado a uma corrida existente. A idade mínima permitida é 12 anos."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -30,7 +31,7 @@ public interface CorredorApi {
                     description = "Corredor cadastrado com sucesso",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(type = "integer", format = "int64", example = "101")
+                            schema = @Schema(implementation = CorredorResponse.class)
                     )
             ),
             @ApiResponse(
@@ -94,10 +95,9 @@ public interface CorredorApi {
             CorredorRequest corredorRequest
     );
 
-
     @Operation(
             summary = "Listar corredores cadastrados",
-            description = "Retorna todos os corredores cadastrados. Quando não houver registros, a lista será vazia."
+            description = "Retorna os corredores cadastrados. Se não houver registros, a resposta será 204 sem corpo."
     )
     @ApiResponses(value = {
             @ApiResponse(
@@ -120,6 +120,10 @@ public interface CorredorApi {
                     )
             ),
             @ApiResponse(
+                    responseCode = "204",
+                    description = "Não há corredores cadastrados"
+            ),
+            @ApiResponse(
                     responseCode = "500",
                     description = "Erro interno no sistema",
                     content = @Content(
@@ -139,9 +143,98 @@ public interface CorredorApi {
     })
     ResponseEntity<List<CorredorResponse>> listarTodos();
 
-    ResponseEntity<CorredorResponse> atualizarCorrida(Long numeroPeito, Long corridaId);
+    @Operation(
+            summary = "Vincular uma corrida ao corredor",
+            description = "Adiciona uma corrida existente às corridas do corredor."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Corrida vinculada ao corredor com sucesso",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = CorredorResponse.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Corredor ou corrida não encontrada",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro interno ou corrida já vinculada ao corredor",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)
+                    )
+            )
+    })
+    ResponseEntity<CorredorResponse> atualizarCorrida(
+            @Parameter(description = "Número de peito do corredor", example = "101", required = true)
+            @PathVariable("numeroPeito") Long numeroPeito,
+            @Parameter(description = "Identificador da corrida a vincular", example = "1", required = true)
+            @PathVariable("corridaId") Long corridaId
+    );
 
-    ResponseEntity<Void> retirarKit(Long corredorId);
+    @Operation(
+            summary = "Confirmar a retirada do kit",
+            description = "Registra que o corredor retirou o kit da corrida."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Retirada do kit confirmada"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Corredor não encontrado",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro interno no sistema",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)
+                    )
+            )
+    })
+    ResponseEntity<Void> retirarKit(
+            @Parameter(description = "Identificador do corredor", example = "101", required = true)
+            @PathVariable("corredorId") Long corredorId
+    );
 
-     ResponseEntity<Void> registarCorrida(Long corridaId, Long corredorId);
+    @Operation(
+            summary = "Registrar a chegada do corredor",
+            description = "Registra o tempo de conclusão da corrida para o corredor inscrito."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Chegada registrada com sucesso"),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Corredor não encontrado ou corrida não vinculada ao corredor",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro interno no sistema",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)
+                    )
+            )
+    })
+    ResponseEntity<Void> registarCorrida(
+            @Parameter(description = "Identificador da corrida concluída", example = "1", required = true)
+            @PathVariable("corridaId") Long corridaId,
+            @Parameter(description = "Identificador do corredor que concluiu a corrida", example = "101", required = true)
+            @PathVariable("corredorId") Long corredorId
+    );
 }
