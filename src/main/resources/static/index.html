@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f4">
+  <title>Pace — Gestão de corridas</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#inicio" aria-label="Pace - início">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M6 22.5 12.5 9l4.2 9 3.2-6 6.1 10.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 26h22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </span>
+        <span>pace<span class="brand-period">.</span></span>
+      </a>
+
+      <div class="sidebar-label">MENU PRINCIPAL</div>
+      <nav class="main-nav" aria-label="Navegação principal">
+        <a class="nav-link active" href="#inicio" data-page="inicio">
+          <span class="nav-icon">⌂</span><span>Visão geral</span>
+        </a>
+        <a class="nav-link" href="#corridas" data-page="corridas">
+          <span class="nav-icon">◷</span><span>Corridas</span>
+        </a>
+        <a class="nav-link" href="#corredores" data-page="corredores">
+          <span class="nav-icon">♙</span><span>Corredores</span>
+        </a>
+        <a class="nav-link" href="#operacoes" data-page="operacoes">
+          <span class="nav-icon">↗</span><span>Operações</span>
+        </a>
+        <a class="nav-link" href="#resultados" data-page="resultados">
+          <span class="nav-icon">▤</span><span>Resultados</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="api-status">
+          <span class="status-dot" id="status-dot"></span>
+          <div><strong id="status-label">Conectando à API</strong><small id="status-url">/api/v1</small></div>
+        </div>
+        <button class="settings-link" id="open-settings" type="button"><span class="nav-icon">⚙</span> Configurar API</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark small" aria-hidden="true">P</span> pace<span class="brand-period">.</span></div>
+        <div class="breadcrumb"><span>Workspace</span><span class="crumb-divider">/</span><strong id="breadcrumb-current">Visão geral</strong></div>
+        <div class="topbar-right">
+          <span class="today-label" id="today-label"></span>
+          <div class="avatar" aria-label="Área administrativa">A</div>
+        </div>
+      </header>
+
+      <section class="page active" id="page-inicio" aria-labelledby="welcome-title">
+        <div class="welcome-row">
+          <div>
+            <p class="eyebrow">PAINEL DE CONTROLE</p>
+            <h1 id="welcome-title">Bom dia, organizador <span class="wave">✳</span></h1>
+            <p class="subtitle">Acompanhe suas corridas e sua comunidade em um só lugar.</p>
+          </div>
+          <button class="button button-primary" type="button" data-go="corridas"><span>＋</span> Nova corrida</button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon mint">◷</span><span class="stat-note">na plataforma</span></div>
+            <div class="stat-number" id="stat-races">—</div><div class="stat-caption">Corridas cadastradas</div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span class="stat-icon lilac">♙</span><span class="stat-note">na comunidade</span></div>
+            <div class="stat-number" id="stat-runners">—</div><div class="stat-caption">Corredores inscritos</div>
+          </article>
+          <article class="stat-card accent-card">
+            <div class="stat-top"><span class="stat-icon dark-icon">↗</span><span class="stat-note light-note">vamos nessa</span></div>
+            <div class="stat-number" id="stat-next-race">—</div><div class="stat-caption">Próxima corrida</div>
+          </article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel panel-large">
+            <div class="panel-heading">
+              <div><p class="eyebrow">AGENDA</p><h2>Próximas corridas</h2></div>
+              <a class="text-link" href="#corridas" data-go="corridas">Ver todas <span>→</span></a>
+            </div>
+            <div id="dashboard-races" class="race-list">
+              <div class="loading-state">Carregando corridas…</div>
+            </div>
+          </section>
+          <section class="panel quick-panel">
+            <div class="panel-heading"><div><p class="eyebrow">ATALHOS</p><h2>O que vamos fazer?</h2></div></div>
+            <div class="quick-actions">
+              <button type="button" data-go="corridas" class="quick-action"><span class="quick-icon mint">＋</span><span><strong>Cadastrar corrida</strong><small>Crie um novo evento</small></span><b>→</b></button>
+              <button type="button" data-go="corredores" class="quick-action"><span class="quick-icon lilac">♙</span><span><strong>Cadastrar corredor</strong><small>Inscreva um participante</small></span><b>→</b></button>
+              <button type="button" data-go="operacoes" class="quick-action"><span class="quick-icon peach">✓</span><span><strong>Confirmar retirada</strong><small>Atualize o status do kit</small></span><b>→</b></button>
+              <button type="button" data-go="resultados" class="quick-action"><span class="quick-icon blue">▤</span><span><strong>Ver resultados</strong><small>Confira tempos por categoria</small></span><b>→</b></button>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-corridas" aria-labelledby="races-title">
+        <div class="welcome-row page-title-row">
+          <div><p class="eyebrow">EVENTOS</p><h1 id="races-title">Corridas</h1><p class="subtitle">Crie eventos e acompanhe as corridas cadastradas.</p></div>
+        </div>
+        <div class="split-layout">
+          <section class="panel form-panel">
+            <div class="panel-heading"><div><p class="eyebrow">NOVO EVENTO</p><h2>Cadastrar corrida</h2></div><span class="heading-icon mint">＋</span></div>
+            <form id="race-form" class="form-stack">
+              <label>Local da corrida<input name="local" type="text" placeholder="Ex.: Parque Ibirapuera" required maxlength="200"></label>
+              <div class="form-row">
+                <label>Distância (km)<input name="distancia" type="number" min="0.1" step="0.1" placeholder="5" required></label>
+                <label>Data e horário<input name="data" type="datetime-local" required></label>
+              </div>
+              <button class="button button-primary full-button" type="submit">Cadastrar corrida <span>→</span></button>
+            </form>
+          </section>
+          <section class="panel">
+            <div class="panel-heading"><div><p class="eyebrow">CALENDÁRIO</p><h2>Todas as corridas</h2></div><button class="icon-button" id="refresh-races" type="button" aria-label="Atualizar corridas">↻</button></div>
+            <div class="table-wrap">
+              <table><thead><tr><th>EVENTO</th><th>DATA</th><th>DISTÂNCIA</th><th>ID</th></tr></thead><tbody id="races-table-body"><tr><td colspan="4" class="empty-cell">Carregando…</td></tr></tbody></table>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-corredores" aria-labelledby="runners-title">
+        <div class="welcome-row page-title-row"><div><p class="eyebrow">COMUNIDADE</p><h1 id="runners-title">Corredores</h1><p class="subtitle">Gerencie inscrições e conheça quem está na linha de partida.</p></div></div>
+        <div class="split-layout">
+          <section class="panel form-panel">
+            <div class="panel-heading"><div><p class="eyebrow">NOVA INSCRIÇÃO</p><h2>Cadastrar corredor</h2></div><span class="heading-icon lilac">♙</span></div>
+            <form id="runner-form" class="form-stack">
+              <label>Nome completo<input name="nome" type="text" placeholder="Ex.: Maria da Silva" required maxlength="150"></label>
+              <div class="form-row">
+                <label>Idade<input name="idade" type="number" min="12" step="1" placeholder="28" required></label>
+                <label>Categoria<select name="categoria" required><option value="" disabled selected>Selecione</option><option value="AMADOR">Amador</option><option value="ELITE">Elite</option></select></label>
+              </div>
+              <label>Corrida<select name="corridaId" id="runner-race-select" required><option value="">Carregando corridas…</option></select></label>
+              <button class="button button-primary full-button" type="submit">Cadastrar corredor <span>→</span></button>
+            </form>
+          </section>
+          <section class="panel">
+            <div class="panel-heading"><div><p class="eyebrow">PARTICIPANTES</p><h2>Corredores inscritos</h2></div><button class="icon-button" id="refresh-runners" type="button" aria-label="Atualizar corredores">↻</button></div>
+            <div class="table-wrap">
+              <table><thead><tr><th>CORREDOR</th><th>CATEGORIA</th><th>CORRIDAS</th><th>Nº PEITO</th></tr></thead><tbody id="runners-table-body"><tr><td colspan="4" class="empty-cell">Carregando…</td></tr></tbody></table>
+            </div>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-operacoes" aria-labelledby="operations-title">
+        <div class="welcome-row page-title-row"><div><p class="eyebrow">DIA DE PROVA</p><h1 id="operations-title">Operações</h1><p class="subtitle">Ações rápidas para manter tudo em movimento.</p></div></div>
+        <div class="operation-grid">
+          <section class="panel operation-card">
+            <div class="operation-art mint-art">✓</div><p class="eyebrow">ENTREGA DE KIT</p><h2>Confirmar retirada</h2><p class="panel-description">Registre a retirada do kit pelo corredor.</p>
+            <form id="kit-form" class="form-stack">
+              <label>Número de peito / ID do corredor<input name="corredorId" type="number" min="1" placeholder="Ex.: 101" required></label>
+              <button class="button button-primary full-button" type="submit">Confirmar retirada <span>→</span></button>
+            </form>
+          </section>
+          <section class="panel operation-card">
+            <div class="operation-art peach-art">⌁</div><p class="eyebrow">LINHA DE CHEGADA</p><h2>Registrar chegada</h2><p class="panel-description">Marque a conclusão de uma corrida pelo participante.</p>
+            <form id="finish-form" class="form-stack">
+              <label>Número de peito / ID do corredor<input name="corredorId" type="number" min="1" placeholder="Ex.: 101" required></label>
+              <label>Corrida<select name="corridaId" class="race-select" required><option value="">Carregando corridas…</option></select></label>
+              <button class="button button-primary full-button" type="submit">Registrar chegada <span>→</span></button>
+            </form>
+          </section>
+          <section class="panel operation-card">
+            <div class="operation-art lilac-art">↗</div><p class="eyebrow">INSCRIÇÃO</p><h2>Vincular corrida</h2><p class="panel-description">Adicione uma corrida à lista de um corredor.</p>
+            <form id="link-form" class="form-stack">
+              <label>Número de peito do corredor<input name="numeroPeito" type="number" min="1" placeholder="Ex.: 101" required></label>
+              <label>Corrida<select name="corridaId" class="race-select" required><option value="">Carregando corridas…</option></select></label>
+              <button class="button button-primary full-button" type="submit">Vincular corrida <span>→</span></button>
+            </form>
+          </section>
+        </div>
+      </section>
+
+      <section class="page" id="page-resultados" aria-labelledby="results-title">
+        <div class="welcome-row page-title-row"><div><p class="eyebrow">CLASSIFICAÇÃO</p><h1 id="results-title">Resultados</h1><p class="subtitle">Consulte os tempos dos participantes por categoria.</p></div></div>
+        <section class="panel results-panel">
+          <div class="panel-heading"><div><p class="eyebrow">RESULTADO DA CORRIDA</p><h2>Quem cruzou a linha de chegada?</h2></div></div>
+          <form id="results-form" class="results-controls">
+            <label>Selecione uma corrida<select name="corridaId" class="race-select" required><option value="">Carregando corridas…</option></select></label>
+            <button class="button button-primary" type="submit">Consultar resultado <span>→</span></button>
+          </form>
+          <div id="results-content" class="results-content"><div class="empty-state"><span class="empty-illustration">🏁</span><strong>Escolha uma corrida</strong><p>Os resultados aparecerão aqui, organizados por categoria.</p></div></div>
+        </section>
+      </section>
+
+      <footer class="footer"><span>Feito para quem corre. <b class="brand-period">●</b></span><span>Pace <span id="footer-year"></span></span></footer>
+    </main>
+  </div>
+
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <dialog class="settings-dialog" id="settings-dialog">
+    <form method="dialog" id="settings-form">
+      <div class="panel-heading"><div><p class="eyebrow">CONEXÃO</p><h2>Configurar API</h2></div><button class="icon-button" value="cancel" aria-label="Fechar">×</button></div>
+      <p class="panel-description">Informe a URL base da API. Por padrão, usamos a API do mesmo servidor.</p>
+      <label>URL base<input id="api-base-input" type="url" placeholder="http://localhost:8080"></label>
+      <div class="dialog-actions"><button class="button button-secondary" value="cancel">Cancelar</button><button class="button button-primary" id="save-settings" value="default">Salvar e conectar</button></div>
+    </form>
+  </dialog>
+</body>
+</html>

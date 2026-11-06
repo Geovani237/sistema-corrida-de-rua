@@ -13,9 +13,8 @@
 - [x] Enriquecer a API com anotações usando IA
 - [x] Criar camada de log estruturado
 - [x] Configurar profile do projeto para desenvolvimento e produção
-- [ ] Mapear todos os lugares tem texto hardcoded
-- [ ] Criar arquivo de mensagens para internacionalização
-- [ ] Criar arquivo para internacionalização de mensagens
-- [ ] Criar uma constante para mapear as mensagens 
-- [ ] Criar testes unitários para os Services(in progress)
-- [ ] Gerar o front com a documentação do Swagger
+- [x] Mapear todos os lugares tem texto hardcoded
+- [x] Criar arquivo para internacionalização de mensagens
+- [ ] Criar uma constante para mapear as mensagens(melhoria)
+- [x] Criar testes unitários para os Services
+- [x] Gerar o front com a documentação do Swagger
