@@ -2,7 +2,7 @@ package com.geovani237.corrida_de_rua.controller;
 
 import com.geovani237.corrida_de_rua.dto.CorridaRequest;
 import com.geovani237.corrida_de_rua.dto.CorridaResponse;
-import com.geovani237.corrida_de_rua.entity.CorridaEntity;
+import com.geovani237.corrida_de_rua.dto.ResultadoPorCategoriaResponse;
 import com.geovani237.corrida_de_rua.service.CorridaService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,9 +59,13 @@ class CorridaControllerTest {
 
     @Test
     void encaminhaConsultaDeResultadoPorCategoria() {
-        CorridaEntity corrida = new CorridaEntity();
-        controller.resultadoPorCategoria(corrida, List.of());
+        ResultadoPorCategoriaResponse response = new ResultadoPorCategoriaResponse(List.of(), List.of());
+        when(service.resultadoPorCategoria(1L)).thenReturn(response);
 
-        verify(service).resultadoPorCategoria(corrida, List.of());
+        var result = controller.resultadoPorCategoria(1L);
+
+        assertEquals(HttpStatus.OK, result.getStatusCode());
+        assertEquals(response, result.getBody());
+        verify(service).resultadoPorCategoria(1L);
     }
 }

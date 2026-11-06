@@ -3,6 +3,7 @@ package com.geovani237.corrida_de_rua.api;
 import com.geovani237.corrida_de_rua.dto.CorridaRequest;
 import com.geovani237.corrida_de_rua.dto.CorridaResponse;
 import com.geovani237.corrida_de_rua.dto.ErrorResponse;
+import com.geovani237.corrida_de_rua.dto.ResultadoPorCategoriaResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -105,4 +107,27 @@ public interface CorridaApi {
             )
     })
     ResponseEntity<List<CorridaResponse>> listarCorridas();
+
+    @Operation(
+            summary = "Consultar resultado por categoria",
+            description = "Retorna os corredores com tempo registrado, separados por categoria e ordenados do menor para o maior tempo."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Resultado da corrida retornado por categoria",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ResultadoPorCategoriaResponse.class)
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Corrida não encontrada",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))
+            )
+    })
+    ResponseEntity<ResultadoPorCategoriaResponse> resultadoPorCategoria(
+            @PathVariable("corridaId") Long corridaId
+    );
 }

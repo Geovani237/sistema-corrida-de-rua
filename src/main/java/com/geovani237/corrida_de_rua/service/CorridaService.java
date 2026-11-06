@@ -2,16 +2,20 @@ package com.geovani237.corrida_de_rua.service;
 
 import com.geovani237.corrida_de_rua.dto.CorridaRequest;
 import com.geovani237.corrida_de_rua.dto.CorridaResponse;
+import com.geovani237.corrida_de_rua.dto.CorredorResultadoResponse;
+import com.geovani237.corrida_de_rua.dto.ResultadoPorCategoriaResponse;
+import com.geovani237.corrida_de_rua.enums.CategoriaEnum;
 import com.geovani237.corrida_de_rua.entity.CorredorEntity;
 import com.geovani237.corrida_de_rua.entity.CorridaEntity;
-import com.geovani237.corrida_de_rua.exception.DadosInvalidosException;
+import com.geovani237.corrida_de_rua.exception.CorridaNaoEncontradoException;
 import com.geovani237.corrida_de_rua.exception.ErroSistemicoException;
 import com.geovani237.corrida_de_rua.mapper.CorridaMapper;
 import com.geovani237.corrida_de_rua.repository.CorridaRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -44,29 +48,35 @@ public class CorridaService {
                 .collect(java.util.stream.Collectors.toList());
     }
 
-    //FIXME: Corrigir método resultadoPorCategoria
-    public void resultadoPorCategoria(CorridaEntity corridaEntity, List<CorredorEntity> corredores) {
-        List<CorredorEntity> amador = new ArrayList<>();
-        List<CorredorEntity> elite = new ArrayList<>();
+    @Transactional(readOnly = true)
+    public ResultadoPorCategoriaResponse resultadoPorCategoria(Long corridaId) {
+        CorridaEntity corrida = corridaRepository.findById(corridaId)
+                .orElseThrow(() -> new CorridaNaoEncontradoException("Corrida não encontrada"));
 
-//        corredores.forEach(corredor -> {
-//            if (corredor.getDuracaoCorrida() != null) {
-//                switch (corredor.getCategoria()) {
-//                    case ELITE -> elite.add(corredor);
-//                    case AMADOR -> amador.add(corredor);
-//                    default -> System.out.println("Corredor sem categoria!");
-//                }
-//            }
-//        });
+        List<CorredorEntity> corredores = corrida.getCorredores() == null
+                ? List.of()
+                : corrida.getCorredores();
 
-        System.out.println("-AMADORES-");
-        amador.forEach(System.out::println);
-        System.out.println("------------------");
-//        amador.sort();
+        return new ResultadoPorCategoriaResponse(
+                obterResultadoDaCategoria(corredores, CategoriaEnum.AMADOR),
+                obterResultadoDaCategoria(corredores, CategoriaEnum.ELITE)
+        );
+    }
 
-        System.out.println("-ELITE-");
-        elite.forEach(System.out::println);
-        System.out.println("------------------");
-
+    private List<CorredorResultadoResponse> obterResultadoDaCategoria(
+            List<CorredorEntity> corredores,
+            CategoriaEnum categoria
+    ) {
+        return corredores.stream()
+                .filter(java.util.Objects::nonNull)
+                .filter(corredor -> corredor.getCategoria() == categoria)
+                .filter(corredor -> corredor.getDuracaoCorrida() != null)
+                .sorted(Comparator.comparing(CorredorEntity::getDuracaoCorrida))
+                .map(corredor -> new CorredorResultadoResponse(
+                        corredor.getId(),
+                        corredor.getNome(),
+                        corredor.getDuracaoCorrida()
+                ))
+                .toList();
     }
 }

@@ -3,8 +3,7 @@ package com.geovani237.corrida_de_rua.controller;
 import com.geovani237.corrida_de_rua.api.CorridaApi;
 import com.geovani237.corrida_de_rua.dto.CorridaRequest;
 import com.geovani237.corrida_de_rua.dto.CorridaResponse;
-import com.geovani237.corrida_de_rua.entity.CorredorEntity;
-import com.geovani237.corrida_de_rua.entity.CorridaEntity;
+import com.geovani237.corrida_de_rua.dto.ResultadoPorCategoriaResponse;
 import com.geovani237.corrida_de_rua.service.CorridaService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -37,8 +36,10 @@ public class CorridaController implements CorridaApi {
                 ResponseEntity.ok(corridaService.listarCorridas());
     }
 
-    @GetMapping("/resultado")
-    public void resultadoPorCategoria(CorridaEntity corridaEntity, List<CorredorEntity> corredores) {
-        corridaService.resultadoPorCategoria(corridaEntity, corredores);
+    @GetMapping("/{corridaId}/resultado")
+    public ResponseEntity<ResultadoPorCategoriaResponse> resultadoPorCategoria(
+            @PathVariable("corridaId") Long corridaId
+    ) {
+        return ResponseEntity.ok(corridaService.resultadoPorCategoria(corridaId));
     }
 }
