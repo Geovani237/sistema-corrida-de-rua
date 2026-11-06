@@ -10,17 +10,17 @@ import java.time.LocalDateTime;
 
 public record CorridaRequest(
 
-        @Schema(description = "Distância da corrida", example = "10.0", requiredMode = Schema.RequiredMode.REQUIRED)
-        @NotNull(message = "Distância obrigatória")
-        @Positive(message = "Distância deve ser positiva")
+        @Schema(description = "${schema.corrida_request.distancia}", example = "10.0", requiredMode = Schema.RequiredMode.REQUIRED)
+        @NotNull(message = "{validation.corrida.distancia.obrigatoria}")
+        @Positive(message = "{validation.corrida.distancia.positiva}")
         Double distancia,
 
-        @Schema(description = "Data da corrida", example = "2023-06-01T10:00:00", requiredMode = Schema.RequiredMode.REQUIRED)
-        @NotNull(message = "Data obrigatória")
+        @Schema(description = "${schema.corrida_request.data}", example = "2023-06-01T10:00:00", requiredMode = Schema.RequiredMode.REQUIRED)
+        @NotNull(message = "{validation.corrida.data.obrigatoria}")
         LocalDateTime data,
 
-        @Schema(description = "Local da corrida", example = "Praça do seu Jorge", requiredMode = Schema.RequiredMode.REQUIRED)
-        @NotBlank(message = "Local obrigatório")
+        @Schema(description = "${schema.corrida_request.local}", example = "${example.corrida.local}", requiredMode = Schema.RequiredMode.REQUIRED)
+        @NotBlank(message = "{validation.corrida.local.obrigatorio}")
         String local
 ){
 

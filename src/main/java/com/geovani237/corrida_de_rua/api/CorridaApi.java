@@ -7,7 +7,6 @@ import com.geovani237.corrida_de_rua.dto.ResultadoPorCategoriaResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,34 +17,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@Tag(name = "Corrida", description = "Endpoints para cadastrar e consultar corridas")
+@Tag(name = "tag.corrida", description = "")
 public interface CorridaApi {
 
     @Operation(
-            summary = "Cadastrar uma corrida",
-            description = "Cadastra uma corrida com distância positiva, data e local informados."
+            operationId = "corridaCadastrar",
+            summary = "",
+            description = ""
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
-                    description = "Corrida cadastrada com sucesso",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = CorridaResponse.class),
-                            examples = @ExampleObject(value = """
-                                    {
-                                      "id": 1,
-                                      "distancia": 10.0,
-                                      "data": "2026-11-01T08:00:00",
-                                      "local": "Parque Central",
-                                      "corredores": []
-                                    }
-                                    """)
+                            schema = @Schema(implementation = CorridaResponse.class)
                     )
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Dados da corrida inválidos",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)
@@ -53,7 +44,7 @@ public interface CorridaApi {
             ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Erro interno ao cadastrar a corrida",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)
@@ -63,43 +54,33 @@ public interface CorridaApi {
     ResponseEntity<CorridaResponse> cadastrar(
             @RequestBody(
                     required = true,
-                    description = "Distância, data e local da corrida",
+                    description = "",
                     content = @Content(schema = @Schema(implementation = CorridaRequest.class))
             )
             CorridaRequest corridaRequest
     );
 
     @Operation(
-            summary = "Listar corridas",
-            description = "Retorna as corridas cadastradas. Se não houver corridas, a resposta será 204 sem corpo."
+            operationId = "corridaListarCorridas",
+            summary = "",
+            description = ""
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Corridas retornadas com sucesso",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = CorridaResponse.class)),
-                            examples = @ExampleObject(value = """
-                                    [
-                                      {
-                                        "id": 1,
-                                        "distancia": 10.0,
-                                        "data": "2026-11-01T08:00:00",
-                                        "local": "Parque Central",
-                                        "corredores": []
-                                      }
-                                    ]
-                                    """)
+                            array = @ArraySchema(schema = @Schema(implementation = CorridaResponse.class))
                     )
             ),
             @ApiResponse(
                     responseCode = "204",
-                    description = "Não há corridas cadastradas"
+                    description = ""
             ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Erro interno ao listar corridas",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)
@@ -109,13 +90,14 @@ public interface CorridaApi {
     ResponseEntity<List<CorridaResponse>> listarCorridas();
 
     @Operation(
-            summary = "Consultar resultado por categoria",
-            description = "Retorna os corredores com tempo registrado, separados por categoria e ordenados do menor para o maior tempo."
+            operationId = "corridaResultadoPorCategoria",
+            summary = "",
+            description = ""
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Resultado da corrida retornado por categoria",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ResultadoPorCategoriaResponse.class)
@@ -123,7 +105,7 @@ public interface CorridaApi {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Corrida não encontrada",
+                    description = "",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))
             )
     })

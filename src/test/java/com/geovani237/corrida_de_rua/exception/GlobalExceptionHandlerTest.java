@@ -1,6 +1,7 @@
 package com.geovani237.corrida_de_rua.exception;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.context.support.StaticMessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -9,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GlobalExceptionHandlerTest {
 
-    private final GlobalExceptionHandler handler = new GlobalExceptionHandler();
+    private final GlobalExceptionHandler handler = new GlobalExceptionHandler(new StaticMessageSource());
     private final ServletWebRequest request = new ServletWebRequest(new MockHttpServletRequest("GET", "/api/test"));
 
     @Test

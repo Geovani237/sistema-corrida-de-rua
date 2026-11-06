@@ -10,22 +10,22 @@ import jakarta.validation.constraints.Positive;
 
 public record CorredorRequest (
 
-        @Schema(description = "Nome completo do corredor", example = "Maria da Silva", requiredMode = Schema.RequiredMode.REQUIRED)
-        @NotBlank(message = "Nome obrigatório")
+        @Schema(description = "${schema.corredor_request.nome}", example = "${example.corredor.nome}", requiredMode = Schema.RequiredMode.REQUIRED)
+        @NotBlank(message = "{validation.corredor.nome.obrigatorio}")
         String nome,
 
-        @Schema(description = "Idade do corredor em anos", example = "28", minimum = "12", requiredMode = Schema.RequiredMode.REQUIRED)
-        @NotNull(message = "Idade obrigatória")
-        @Min(value = 12, message = "Idade mínima é 12 anos")
+        @Schema(description = "${schema.corredor_request.idade}", example = "28", minimum = "12", requiredMode = Schema.RequiredMode.REQUIRED)
+        @NotNull(message = "{validation.corredor.idade.obrigatoria}")
+        @Min(value = 12, message = "{validation.corredor.idade.minima}")
         Integer idade,
 
-        @Schema(description = "Categoria do corredor", example = "AMADOR", requiredMode = Schema.RequiredMode.REQUIRED)
-        @NotNull(message = "Categoria obrigatória")
+        @Schema(description = "${schema.corredor_request.categoria}", example = "AMADOR", requiredMode = Schema.RequiredMode.REQUIRED)
+        @NotNull(message = "{validation.corredor.categoria.obrigatoria}")
         CategoriaEnum categoria,
 
-        @Schema(description = "Identificador da corrida à qual o corredor será vinculado", example = "1", minimum = "1", requiredMode = Schema.RequiredMode.REQUIRED)
-        @NotNull(message = "Id da corrida é obrigatório")
-        @Positive(message = "Id da corrida deve ser positivo")
+        @Schema(description = "${schema.corredor_request.corrida_id}", example = "1", minimum = "1", requiredMode = Schema.RequiredMode.REQUIRED)
+        @NotNull(message = "{validation.corredor.corrida_id.obrigatorio}")
+        @Positive(message = "{validation.corredor.corrida_id.positivo}")
         Long corridaId
 ){
 

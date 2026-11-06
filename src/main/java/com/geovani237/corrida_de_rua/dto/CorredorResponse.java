@@ -7,15 +7,15 @@ import java.util.List;
 
 public record CorredorResponse (
 
-        @Schema(description = "Número de peito atribuído ao corredor", example = "101")
+        @Schema(description = "${schema.corredor_response.numero_peito}", example = "101")
         Long numeroPeito,
-        @Schema(description = "Nome completo do corredor", example = "Maria da Silva")
+        @Schema(description = "${schema.corredor_response.nome}", example = "${example.corredor.nome}")
         String nome,
-        @Schema(description = "Idade do corredor em anos", example = "28")
+        @Schema(description = "${schema.corredor_response.idade}", example = "28")
         Integer idade,
-        @Schema(description = "Categoria do corredor", example = "AMADOR")
+        @Schema(description = "${schema.corredor_response.categoria}", example = "AMADOR")
         CategoriaEnum categoria,
-        @Schema(description = "Identificadores das corridas do corredor", example = "[1]")
+        @Schema(description = "${schema.corredor_response.corrida_ids}", example = "[1]")
         List<Long> corridaIds
 ){
 

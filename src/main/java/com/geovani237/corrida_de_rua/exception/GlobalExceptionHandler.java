@@ -1,22 +1,35 @@
 package com.geovani237.corrida_de_rua.exception;
 
 import com.geovani237.corrida_de_rua.dto.ErrorResponse;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import lombok.RequiredArgsConstructor;
 
 @ControllerAdvice
+@RequiredArgsConstructor
 public class GlobalExceptionHandler {
 
+    private final MessageSource messageSource;
+
     private ResponseEntity<ErrorResponse> createErrorResponse(HttpStatus status, String message, WebRequest request) {
+        String messageKey = message == null ? "error.inesperado" : message;
+        String localizedMessage = messageSource.getMessage(
+                messageKey,
+                null,
+                messageKey,
+                LocaleContextHolder.getLocale()
+        );
 
         ErrorResponse errorResponse = new ErrorResponse(
                 java.time.Instant.now(),
                 status.value(),
                 status.getReasonPhrase(),
-                message,
+                localizedMessage,
                 request.getDescription(false).replace("uri=", "")
         );
         return ResponseEntity.status(status).body(errorResponse);

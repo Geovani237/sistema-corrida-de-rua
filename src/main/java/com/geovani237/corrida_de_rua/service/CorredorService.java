@@ -39,15 +39,15 @@ public class CorredorService {
             CorredorEntity corredorEntity = corredorMapper.toEntity(corredorRequest);
 
             corredorEntity.getCorridas().add(corridaRepository.findById(corredorRequest.corridaId()).orElseThrow(
-                    () -> new CorridaNaoEncontradoException("Corrida não encontrada")));
+                    () -> new CorridaNaoEncontradoException("error.corrida.nao_encontrada")));
 
         try {
             corredorRepository.save(corredorEntity);
             return corredorMapper.toResponse(corredorEntity);
         }
         catch (Exception e) {
-            log.error("Erro ao cadastrar corredor", e);
-            throw new ErroSistemicoException("Erro ao cadastra corredor");
+            log.error("error.corredor.cadastrar", e);
+            throw new ErroSistemicoException("error.corredor.cadastrar");
         }
     }
 
@@ -60,13 +60,13 @@ public class CorredorService {
     @Transactional
     public CorredorResponse atualizarCorrida(Long numeroPeito, Long corridaId) {
         CorredorEntity corredorEntity = corredorRepository.findById(numeroPeito).orElseThrow(
-                () -> new CorredorNaoEncontradoException("Corredor não encontrado"));
+                () -> new CorredorNaoEncontradoException("error.corredor.nao_encontrado"));
 
         if (corredorEntity.getCorridas().stream().anyMatch(corrida -> corrida.getId().equals(corridaId))) {
-            throw new ErroSistemicoException("Corrida já cadastrada para o corredor");
+            throw new ErroSistemicoException("error.corredor.atualizar_corrida");
         } else  {
             CorridaEntity corridaEntity = corridaRepository.findById(corridaId).orElseThrow(
-                    () -> new CorridaNaoEncontradoException("Corrida não encontrada"));
+                    () -> new CorridaNaoEncontradoException("error.corrida.nao_encontrada"));
             corredorEntity.getCorridas().add(corridaEntity);
             corredorRepository.save(corredorEntity);
 
@@ -77,7 +77,7 @@ public class CorredorService {
     @Transactional
     public void retirarKit(Long corredorId) {
         CorredorEntity corredorEntity = corredorRepository.findById(corredorId).orElseThrow(
-                () -> new CorredorNaoEncontradoException("Corredor não encontrado"));
+                () -> new CorredorNaoEncontradoException("error.corredor.nao_encontrado"));
 
         corredorEntity.setStatusPagamento(true);
         // ideal ter um try catch
@@ -89,12 +89,12 @@ public class CorredorService {
     public void registrarChegada(Long corridaId, Long corredorId) {
 
         CorredorEntity corredorEntity = corredorRepository.findById(corredorId).orElseThrow(
-                () -> new CorredorNaoEncontradoException("Corredor não encontrado"));
+                () -> new CorredorNaoEncontradoException("error.corredor.nao_encontrado"));
 
         CorridaEntity corridaEntity = corredorEntity.getCorridas().stream()
                 .filter(corrida -> corrida.getId().equals(corridaId))
                 .findFirst()
-                .orElseThrow(() -> new CorridaNaoEncontradoException("Corrida não encontrada"));
+                .orElseThrow(() -> new CorridaNaoEncontradoException("error.corrida.nao_encontrada"));
 
         LocalDateTime inicioCorrida = corridaEntity.getData();
         LocalDateTime chegadaCorrida = LocalDateTime.now();

@@ -37,7 +37,7 @@ public class CorridaService {
             return corridaMapper.toResponse(corridaEntity);
 
         } catch (Exception e) {
-            throw new ErroSistemicoException("Erro ao cadastra Corrida");
+            throw new ErroSistemicoException("error.corrida.cadastrar");
         }
 
     }
@@ -51,7 +51,7 @@ public class CorridaService {
     @Transactional(readOnly = true)
     public ResultadoPorCategoriaResponse resultadoPorCategoria(Long corridaId) {
         CorridaEntity corrida = corridaRepository.findById(corridaId)
-                .orElseThrow(() -> new CorridaNaoEncontradoException("Corrida não encontrada"));
+                .orElseThrow(() -> new CorridaNaoEncontradoException("error.corrida.nao_encontrada"));
 
         List<CorredorEntity> corredores = corrida.getCorredores() == null
                 ? List.of()

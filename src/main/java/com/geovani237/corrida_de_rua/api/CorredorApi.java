@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,17 +17,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
-@Tag(name = "Corredor", description = "Endpoints para cadastrar e gerenciar corredores")
+@Tag(name = "tag.corredor", description = "")
 public interface CorredorApi {
 
     @Operation(
-            summary = "Cadastrar um novo corredor",
-            description = "Cadastra um corredor vinculado a uma corrida existente. A idade mínima permitida é 12 anos."
+            operationId = "corredorCadastrar",
+            summary = "",
+            description = ""
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "201",
-                    description = "Corredor cadastrado com sucesso",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = CorredorResponse.class)
@@ -36,121 +36,76 @@ public interface CorredorApi {
             ),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Dados do corredor inválidos",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class),
-                            examples = @ExampleObject(value = """
-                                    {
-                                      "timestamp": "2026-09-18T12:31:32Z",
-                                      "status": 400,
-                                      "error": "Bad Request",
-                                      "message": "Idade mínima é 12 anos",
-                                      "path": "/api/v1/corredores"
-                                    }
-                                    """)
+                            schema = @Schema(implementation = ErrorResponse.class)
                     )
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Corrida não encontrada",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class),
-                            examples = @ExampleObject(value = """
-                                    {
-                                      "timestamp": "2026-09-18T12:31:32Z",
-                                      "status": 404,
-                                      "error": "Not Found",
-                                      "message": "Corrida não encontrada",
-                                      "path": "/api/v1/corredores"
-                                    }
-                                    """)
+                            schema = @Schema(implementation = ErrorResponse.class)
                     )
             ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Erro interno no sistema",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class),
-                            examples = @ExampleObject(value = """
-                                    {
-                                      "timestamp": "2026-09-18T12:31:32Z",
-                                      "status": 500,
-                                      "error": "Internal Server Error",
-                                      "message": "Ocorreu um erro inesperado",
-                                      "path": "/api/v1/corredores"
-                                    }
-                                    """)
+                            schema = @Schema(implementation = ErrorResponse.class)
                     )
             )
     })
     ResponseEntity<CorredorResponse> cadastrar(
             @RequestBody(
                     required = true,
-                    description = "Dados necessários para o cadastro do corredor",
+                    description = "",
                     content = @Content(schema = @Schema(implementation = CorredorRequest.class))
             )
             CorredorRequest corredorRequest
     );
 
     @Operation(
-            summary = "Listar corredores cadastrados",
-            description = "Retorna os corredores cadastrados. Se não houver registros, a resposta será 204 sem corpo."
+            operationId = "corredorListarTodos",
+            summary = "",
+            description = ""
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Corredores retornados com sucesso",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
-                            array = @ArraySchema(schema = @Schema(implementation = CorredorResponse.class)),
-                            examples = @ExampleObject(value = """
-                                    [
-                                      {
-                                        "numeroPeito": 101,
-                                        "nome": "Maria da Silva",
-                                        "idade": 28,
-                                        "categoria": "AMADOR",
-                                        "corridaIds": [1]
-                                      }
-                                    ]
-                                    """)
+                            array = @ArraySchema(schema = @Schema(implementation = CorredorResponse.class))
                     )
             ),
             @ApiResponse(
                     responseCode = "204",
-                    description = "Não há corredores cadastrados"
+                    description = ""
             ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Erro interno no sistema",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class),
-                            examples = @ExampleObject(value = """
-                                    {
-                                      "timestamp": "2026-09-18T12:31:32Z",
-                                      "status": 500,
-                                      "error": "Internal Server Error",
-                                      "message": "Ocorreu um erro inesperado",
-                                      "path": "/api/v1/corredores"
-                                    }
-                                    """)
+                            schema = @Schema(implementation = ErrorResponse.class)
                     )
             )
     })
     ResponseEntity<List<CorredorResponse>> listarTodos();
 
     @Operation(
-            summary = "Vincular uma corrida ao corredor",
-            description = "Adiciona uma corrida existente às corridas do corredor."
+            operationId = "corredorAtualizarCorrida",
+            summary = "",
+            description = ""
     )
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Corrida vinculada ao corredor com sucesso",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = CorredorResponse.class)
@@ -158,7 +113,7 @@ public interface CorredorApi {
             ),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Corredor ou corrida não encontrada",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)
@@ -166,7 +121,7 @@ public interface CorredorApi {
             ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Erro interno ou corrida já vinculada ao corredor",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)
@@ -174,21 +129,22 @@ public interface CorredorApi {
             )
     })
     ResponseEntity<CorredorResponse> atualizarCorrida(
-            @Parameter(description = "Número de peito do corredor", example = "101", required = true)
+            @Parameter(description = "", example = "101", required = true)
             @PathVariable("numeroPeito") Long numeroPeito,
-            @Parameter(description = "Identificador da corrida a vincular", example = "1", required = true)
+            @Parameter(description = "", example = "1", required = true)
             @PathVariable("corridaId") Long corridaId
     );
 
     @Operation(
-            summary = "Confirmar a retirada do kit",
-            description = "Registra que o corredor retirou o kit da corrida."
+            operationId = "corredorRetirarKit",
+            summary = "",
+            description = ""
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Retirada do kit confirmada"),
+            @ApiResponse(responseCode = "200", description = ""),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Corredor não encontrado",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)
@@ -196,7 +152,7 @@ public interface CorredorApi {
             ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Erro interno no sistema",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)
@@ -204,19 +160,20 @@ public interface CorredorApi {
             )
     })
     ResponseEntity<Void> retirarKit(
-            @Parameter(description = "Identificador do corredor", example = "101", required = true)
+            @Parameter(description = "", example = "101", required = true)
             @PathVariable("corredorId") Long corredorId
     );
 
     @Operation(
-            summary = "Registrar a chegada do corredor",
-            description = "Registra o tempo de conclusão da corrida para o corredor inscrito."
+            operationId = "corredorRegistrarChegada",
+            summary = "",
+            description = ""
     )
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Chegada registrada com sucesso"),
+            @ApiResponse(responseCode = "200", description = ""),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Corredor não encontrado ou corrida não vinculada ao corredor",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)
@@ -224,7 +181,7 @@ public interface CorredorApi {
             ),
             @ApiResponse(
                     responseCode = "500",
-                    description = "Erro interno no sistema",
+                    description = "",
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class)
@@ -232,9 +189,9 @@ public interface CorredorApi {
             )
     })
     ResponseEntity<Void> registarCorrida(
-            @Parameter(description = "Identificador da corrida concluída", example = "1", required = true)
+            @Parameter(description = "", example = "1", required = true)
             @PathVariable("corridaId") Long corridaId,
-            @Parameter(description = "Identificador do corredor que concluiu a corrida", example = "101", required = true)
+            @Parameter(description = "", example = "101", required = true)
             @PathVariable("corredorId") Long corredorId
     );
 }

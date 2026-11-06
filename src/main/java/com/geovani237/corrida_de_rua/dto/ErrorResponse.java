@@ -4,22 +4,22 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.Instant;
 
-@Schema(name = "ErrorResponse", description = "Estrutura padrão das mensagens de erro da API")
+@Schema(name = "ErrorResponse", description = "${schema.error_response.description}")
 public record ErrorResponse(
 
-        @Schema(description = "Data e hora em que o erro ocorreu", example = "2026-09-18T12:31:32Z")
+        @Schema(description = "${schema.error_response.timestamp}", example = "2026-09-18T12:31:32Z")
         Instant timestamp,
 
-        @Schema(description = "Código HTTP do erro", example = "400")
+        @Schema(description = "${schema.error_response.status}", example = "400")
         Integer status,
 
-        @Schema(description = "Descrição resumida do erro", example = "Bad Request")
+        @Schema(description = "${schema.error_response.error}", example = "${example.error_response.error}")
         String error,
 
-        @Schema(description = "Detalhes do erro", example = "Idade mínima é 12 anos")
+        @Schema(description = "${schema.error_response.message}", example = "${example.error_response.message}")
         String message,
 
-        @Schema(description = "Caminho da requisição que gerou o erro", example = "/api/v1/corredores")
+        @Schema(description = "${schema.error_response.path}", example = "/api/v1/corredores")
         String path
 ) {
 }
